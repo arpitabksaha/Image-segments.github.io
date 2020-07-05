@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    </head>
+    <body>
+        <script type="text/javascript">
+            var data = [2, 2, 2, 2, 2, 2,2];
+            
+            var svg = d3.select("body")
+                .append("svg")
+                .attr("width", 200)
+                .attr("height", 200)
+                .style("border", "1px solid black");
+                
+    
+            var imgs = svg.selectAll("img").data([0]);
+                imgs.enter()
+                .append("svg:image")
+                .attr("xlink:href", "coin.png")
+                .attr("x", "50")
+                .attr("y", "50")
+                .attr("width", "100")
+                .attr("height", "100");
+			
+	    var pie = d3.pie();		
+				
+		var arc = d3.arc()
+					.innerRadius(0)
+					.outerRadius(50);
+					
+		var sector = svg.append("path")
+		             .attr("fill","none")
+		             .attr("transform", "translate(100,100)")
+		             .attr("d",arc({startAngle:(Math.PI/4), endAngle:(Math.PI/2)}));
+		             
+		var arcs = svg.append("g").attr("transform", "translate(100,100)").selectAll("arc")
+					.data(pie(data))
+					.enter()
+					.append("g")
+					.attr("class", "arc")
+
+            
+		arcs.append("path")
+			.attr("fill", 'transparent')
+			.attr("stroke-width",2)
+			.attr("stroke", function(d) {
+				return 'black'
+			})
+			.attr("d", arc);
+
+        </script>
+    </body>
+</html>
